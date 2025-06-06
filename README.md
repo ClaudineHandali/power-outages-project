@@ -71,6 +71,11 @@ With these transformations, the dataset was clean, consistent, and ready for ana
 
 # Framing a Prediction Problem
 Our goal is to predict the power outage duration. This will be a regression problem because the power outage duration is measured by minutes, which is a continuous numerical variable. 
+
+I chose this problem because by predicting power outage duration we're able to know how long different outages might last. This allows the company to assign repair crews and equipments more effectively, prioritize high-impact areas, and reduce restoration time. A prediction models generate data that can be used to improve outage prevention, infrastructure investments, and disaster readiness.
+
+
+
 # Baseline Model
 # Final Model
 
