@@ -62,8 +62,9 @@ Supporting this, summary statistics show that the average and median durations i
 
 Motivated by these observations, we conducted a hypothesis test to determine whether the difference in mean outage duration between cold and warm climates is statistically significant.
 
+---
 # Assessment of Missingness
-We investigated whether missing outage durations are associated with differences in the distributions of other variables: CLIMATE.CATEGORY, CAUSE.CATEGORY, and MONTH. The tests were conducted using Total Variation Distance (TVD) and permutation testing to assess whether the distributions differ significantly between records with and without missing durations.
+We investigated whether missing outage durations are associated with differences in the distributions of other variables: 'CLIMATE.CATEGORY', 'CAUSE.CATEGORY', and 'MONTH'. The tests were conducted using Total Variation Distance (TVD) and permutation testing to assess whether the distributions differ significantly between records with and without missing durations.
 
 ## 1. CLIMATE.CATEGORY vs Missingness
 **Null Hypothesis (H₀)**: Climate category distribution is the same for missing and non-missing outage durations.
@@ -98,6 +99,7 @@ The p-value is effectively zero, indicating strong evidence that the distributio
 
 The p-value indicates no significant evidence to reject the null. Thus, we conclude that missing durations do not appear to be related to the month in which the outage occurred.
 
+---
 
 # Hypothesis Testing
 ## Permutation Test: Mean Outage Duration by Climate Category
