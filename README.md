@@ -70,6 +70,7 @@ With these transformations, the dataset was clean, consistent, and ready for ana
 # Hypothesis Testing
 
 # Framing a Prediction Problem
+Our goal is to predict the power outage duration. This will be a regression problem because the power outage duration is measured by minutes, which is a continuous numerical variable. 
 # Baseline Model
 # Final Model
 
