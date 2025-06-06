@@ -44,14 +44,87 @@ Lastly, to prepare the <code>'CAUSE.CATEGORY.DETAIL'</code> column for analysis,
 With these transformations, the dataset was clean, consistent, and ready for analysis.
 
 ## Exploratory Data Analysis
+The exploratory data analysis (EDA) reveals several important patterns in the power outage dataset. 
 
-### Univariate Analysis
-### Bivariate Analysis
-### Grouping and Aggregates
+The distribution of outage durations is heavily right-skewed, with the majority of events lasting under 1,000 minutes, though a long tail of extreme cases exists. Most outages affect tens of thousands of customers, with some events impacting over one million. 
 
+When looking at cause categories, outages attributed to fuel supply emergencies and severe weather have notably longer average durations, suggesting that certain causes are especially disruptive.
+
+Further, detailed analysis by cause category reveals that events like coal-related outages, flooding, and transmission failures are associated with the highest average durations, exceeding 20,000 minutes in some cases. 
+
+Geographic analysis by U.S. state shows a wide variation in outage lengths, with a number of states experiencing extreme values well above 50,000 minutes. Over time, average outage duration has fluctuated without a clear trend, indicating persistent structural vulnerabilities.
+
+A boxplot by climate region also shows wide variation, especially in the Northeast and Southeast, suggesting that climate may influence outage severity.
+
+To explore this possibility, we compared outage durations between cold and warm climates. A distribution plot shows that while both climate types have similar right-skewed shapes, cold climates appear to have slightly longer durations, particularly in the tail.
+
+Supporting this, summary statistics show that the average and median durations in cold climates are higher than in warm climates.
+
+Motivated by these observations, we conducted a hypothesis test to determine whether the difference in mean outage duration between cold and warm climates is statistically significant.
+
+---
 # Assessment of Missingness
+We investigated whether missing outage durations are associated with differences in the distributions of other variables: 'CLIMATE.CATEGORY', 'CAUSE.CATEGORY', and 'MONTH'. The tests were conducted using Total Variation Distance (TVD) and permutation testing to assess whether the distributions differ significantly between records with and without missing durations.
+
+## 1. CLIMATE.CATEGORY vs Missingness
+**Null Hypothesis (H₀)**: Climate category distribution is the same for missing and non-missing outage durations.
+
+**Alternative Hypothesis (H₁)**: Climate category distribution is different for missing and non-missing outage durations.
+
+**Observed TVD**: 0.0948
+
+**Permutation p-value**: 0.0656
+
+The p-value is slightly above the common α = 0.05 threshold, suggesting weak evidence against the null. There may be some relationship between missingness and climate category, but it is not statistically significant at the 5% level.
+
+## 2. CAUSE.CATEGORY vs Missingness
+**Null Hypothesis (H₀)**: Cause category distribution is the same for missing and non-missing outage durations.
+
+**Alternative Hypothesis (H₁)**: Cause category distribution is different for missing and non-missing outage durations.
+
+**Observed TVD**: 0.4677
+
+**Permutation p-value**: 0.0000
+
+The p-value is effectively zero, indicating strong evidence that the distribution of cause category is significantly different between records with and without missing durations. This suggests a non-random pattern of missingness likely tied to specific causes.
+
+## 3. MONTH vs Missingness**
+**Null Hypothesis (H₀)**: Month distribution is the same for missing and non-missing outage durations.
+
+**Alternative Hypothesis (H₁)**: Month distribution is different for missing and non-missing outage durations.
+
+**Observed TVD**: 0.1432
+
+**Permutation p-value**: 0.2122
+
+The p-value indicates no significant evidence to reject the null. Thus, we conclude that missing durations do not appear to be related to the month in which the outage occurred.
+
+---
 
 # Hypothesis Testing
+## Permutation Test: Mean Outage Duration by Climate Category
+**Null Hypothesis (H₀)**:
+The mean outage duration in cold climates is equal to that in warm climates.
+(Any observed difference is due to random chance.)
+
+**Alternative Hypothesis (H₁)**:
+The mean outage duration in cold climates is different from that in warm climates.
+(The observed difference reflects a true difference, not just random variation.)
+
+**Test Statistic**:
+Absolute difference in mean outage durations between the two climate categories.
+
+**Observed Mean Difference (Cold – Warm)**:
+243.93 minutes
+
+**Permutation p-value**:
+0.6270
+
+The p-value of 0.6270 is much greater than the typical significance level of 0.05, meaning we fail to reject the null hypothesis.
+
+**Conclusion**:
+There is no statistically significant evidence to suggest that mean outage durations differ between cold and warm climate categories. The observed difference of 243.93 minutes is likely due to random chance.
+
 
 # Framing a Prediction Problem
 # Baseline Model
