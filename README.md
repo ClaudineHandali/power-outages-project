@@ -36,7 +36,10 @@ Next, we merged the outage date and time columns to create two unified timestamp
 
 We also addressed implausible 0 values in key outcome variables — `OUTAGE.DURATION`, `CUSTOMERS.AFFECTED`, and `DEMAND.LOSS.MW` — treating them as missing data by replacing them with `np.nan`.
 
-Lastly, We created a new column called `URBAN` by combining `POPPCT_URBAN`, `POPDEN_URBAN`, and `AREAPCT_URBAN`. This new feature summarizes the extent and density of urbanization in each state to support downstream analysis.
+Then, We created a new column called `URBAN` by combining `POPPCT_URBAN`, `POPDEN_URBAN`, and `AREAPCT_URBAN`. This new feature summarizes the extent and density of urbanization in each state to support downstream analysis.
+
+Lastly, to prepare the <code>'CAUSE.CATEGORY.DETAIL'</code> column for analysis, I first standardized the text by stripping whitespace, converting all entries to lowercase, and ensuring that missing values were correctly treated as <code>np.nan</code>. Then, I unified variations of similar labels (e.g., <code>' coal'</code> to <code>'coal'</code>, <code>'snow/ice storm'</code> to <code>'snow/ice'</code>, <code>'wind/rain'</code> to <code>'wind'</code>) to reduce redundancy and improve consistency. This cleaning process ensures the data is more accurate and ready for grouping and statistical comparison.
+
 
 With these transformations, the dataset was clean, consistent, and ready for analysis.
 
