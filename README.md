@@ -4,7 +4,7 @@ DSC 80 Final Project
 By: Claudine Handali, Sharon Tey
 
 #Introduction
-Write something...
+
 
 # Data Cleaning and Exploratory Data Analysis
 ## Cleaning
