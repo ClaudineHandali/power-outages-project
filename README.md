@@ -16,15 +16,56 @@ By: Claudine Handali, Sharon Tey
 ---
 
 
-#Introduction
+# Introduction
+
+This project analyzes a dataset of large-scale power outages in the United States between 2000 and 2016. Each row represents a significant outage — defined by the U.S. Department of Energy as one that either disrupted power for over 50,000 customers or caused an unplanned demand loss of at least 300 megawatts. The dataset was compiled by Purdue University's LASCI Lab and includes geographic, climatic, and demographic context alongside each outage.
+
+The main question driving this project is:  
+**What are the important factors that causes power outages? **  
+This question is relevant for improving infrastructure resilience and optimizing disaster response strategies amid climate variability.
+
+## Dataset Summary
+
+The dataset includes **1,534 rows**, each describing a separate outage event. The following columns are especially relevant:
+
+| Column Name               | Description |
+|---------------------------|-------------|
+| `'YEAR'`                  | Year the outage occurred |
+| `'MONTH'`                 | Month the outage occurred |
+| `'U.S._STATE'`            | State in which the outage occurred |
+| `'NERC.REGION'`           | NERC electric reliability region of the outage |
+| `'CLIMATE.REGION'`        | NOAA-defined U.S. climate region |
+| `'ANOMALY.LEVEL'`         | Seasonal climate anomaly (e.g., El Niño or La Niña) |
+| `'OUTAGE.START.DATE'`     | Date the outage began |
+| `'OUTAGE.START.TIME'`     | Time the outage began |
+| `'OUTAGE.RESTORATION.DATE'` | Date power was restored |
+| `'OUTAGE.RESTORATION.TIME'` | Time power was restored |
+| `'CAUSE.CATEGORY'`        | Broad reason for the outage (e.g., weather, equipment failure) |
+| `'OUTAGE.DURATION'`       | Length of the outage in minutes |
+| `'DEMAND.LOSS.MW'`        | Peak demand lost in megawatts |
+| `'CUSTOMERS.AFFECTED'`    | Number of customers without power |
+| `'TOTAL.PRICE'`           | Average monthly electricity price (cents/kWh) |
+| `'TOTAL.SALES'`           | Total electricity sales in MWh |
+| `'TOTAL.CUSTOMERS'`       | Annual number of customers served |
+| `'POPPCT_URBAN'`          | Percent of population living in urban areas |
+| `'POPDEN_URBAN'`          | Urban population density |
+| `'AREAPCT_URBAN'`         | Urban land area as a percentage of total state area |
+
+These columns enable us to investigate climate-specific trends in outage severity and duration.
 
 ---
 # Data Cleaning and Exploratory Data Analysis
-## 🔧 Data Cleaning
+## Data Cleaning
 
 For this project, we worked exclusively with the `outage.xlsx` dataset, which contains detailed records of major power outages across the United States.
 
-We began by selecting a subset of columns relevant to my analysis, including:
+We began by selectThis project explores a dataset of major power outages in the United States from January 2000 to July 2016, compiled by the U.S. Department of Energy and shared by Purdue University’s LASCI Lab. Each entry in the dataset represents a significant outage event—defined as affecting at least 50,000 customers or causing a loss of 300 megawatts or more in unplanned energy demand.
+
+Our central question is:
+
+Are power outages that occur during cold climate conditions significantly longer than those that occur during warm conditions?
+
+This question matters because understanding the relationship between climate conditions and outage severity can help utilities, local governments, and emergency response teams better anticipate the scale of disruption and respond proactively during different seasons.ing a subset of columns relevant to my analysis, including:
 
 - **Temporal and geographic data:** `YEAR`, `MONTH`, `U.S._STATE`, `NERC.REGION`, `CLIMATE.REGION`
 - **Outage metadata:** `CAUSE.CATEGORY`, `CAUSE.CATEGORY.DETAIL`, `OUTAGE.DURATION`, `DEMAND.LOSS.MW`, `CUSTOMERS.AFFECTED`
@@ -102,6 +143,13 @@ To explore this possibility, we compared outage durations between cold and warm 
 ></iframe>
 
 Supporting this, summary statistics show that the average and median durations in cold climates are higher than in warm climates.
+
+| Climate Category | Number of Outages | Average Duration | Median Duration |
+|------------------|-------------------|------------------|-----------------|
+| cold             | 420               | 2915.30          | 1036.00         |
+| normal           | 690               | 2635.97          | 726.50          |
+| warm             | 280               | 2671.36          | 890.50          |
+
 
 Motivated by these observations, we conducted a hypothesis test to determine whether the difference in mean outage duration between cold and warm climates is statistically significant.
 
