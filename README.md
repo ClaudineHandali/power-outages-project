@@ -257,12 +257,42 @@ There is no statistically significant evidence to suggest that mean outage durat
 # Framing a Prediction Problem
 Our goal is to predict the power outage duration. This will be a regression problem because the power outage duration is measured by minutes, which is a continuous numerical variable. 
 
-I chose this problem because by predicting power outage duration we're able to know how long different outages might last. This allows the company to assign repair crews and equipments more effectively, prioritize high-impact areas, and reduce restoration time. A prediction models generate data that can be used to improve outage prevention, infrastructure investments, and disaster readiness.
+We chose this problem because by predicting power outage duration we're able to know how long different outages might last. This allows the company to assign repair crews and equipments more effectively, prioritize high-impact areas, and reduce restoration time. A prediction models generate data that can be used to improve outage prevention, infrastructure investments, and disaster readiness.
 
-The metric I am using to evaluate my model is mean absolute error (MAE) because `OUTAGE.DURATION` contains several outliers. MAE is less sensitive to these extreme values, providing a more balanced view of average prediction error.
+The metric we are using to evaluate my model is mean absolute error (MAE) because `OUTAGE.DURATION` contains several outliers. MAE is less sensitive to these extreme values, providing a more balanced view of average prediction error.
 
 # Baseline Model
-My model is a simple linear regression model, using the features 'CAUSE.CATEGORY', 'ANOMALY.LEVEL', 'MONTH', 'YEAR'
+In this process, we build a predictive model to estimate the duration of power outages using historical outage data. We begin by selecting relevant features—`CAUSE.CATEGORY`, `ANOMALY.LEVEL`, `MONTH`, and `YEAR`—as predictors, and set `OUTAGE.DURATION` as the target variable. After removing rows with missing target values, we define preprocessing steps: numerical features (`ANOMALY.LEVEL`, `MONTH`, `YEAR`) are standardized using `StandardScaler`, while categorical features (`CAUSE.CATEGORY`) are one-hot encoded to convert them into a numerical format. These transformations are applied using a `ColumnTransformer`, which is integrated into a pipeline with a `LinearRegression` model. We split the data into training and testing sets, train the model on the training data, and evaluate its performance on the test set using three metrics: Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and R-squared (R²). This allows us to assess how well the model predicts outage duration and understand the quality of its predictions.
+
+The predictive model achieved a Mean Absolute Error (MAE) of 2217.99 minutes, meaning that on average, the model's outage duration predictions differ from the actual values by around 37 hours. The MAE is relatively low because of the large variance in our initial distribution plot of OUTAGE.DURATION. 
+
 # Final Model
+In our final model, we used all available features in the dataset (except the target OUTAGE.DURATION) to train a Random Forest Regressor for predicting outage durations. We began by dropping any rows with missing target values to ensure model training was not affected by incomplete labels. We then automatically identified categorical and numerical features based on their data types. For numerical features, we applied a Quantile Transformer (to normalize the distribution) after imputing missing values with the median. For categorical features, missing values were filled using the most frequent value, followed by one-hot encoding to convert them into numerical format.
+
+Next, we built a full machine learning pipeline that includes preprocessing and model training in one cohesive step. We used GridSearchCV with 5-fold cross-validation to fine-tune the Random Forest hyperparameters (n_estimators, max_depth, and min_samples_split) and evaluated model performance using mean absolute error (MAE). After training, the best model was selected based on the lowest MAE, and its performance was evaluated on the test set using MAE, Root Mean Squared Error (RMSE), and R-squared (R²). 
+
+This round, the model performed better with a MAE of 1742.14 minutes, lowering it by 475.85 minutes. This setup allows the model to handle both missing values and feature transformations robustly, while optimizing for prediction accuracy through parameter tuning.
 
 # Fairness Analysis
+Our groups decided to use severe weather vs intentional attack outages as our fairness analysis. This is defined using the CAUSE.CATEGORY column, where one group includes all test samples labeled “severe weather” and the other includes “intentional attack.”
+
+I decided on these groups because understanding how well the model predicts outages caused by natural events (like storms) versus mankind ones (like sabotage) is critical. These categories represent two fundamentally different causes of outages, and utilities may allocate very different types of resources to mitigate them. We want to ensure the model performs equitably across both causes so that decisions aren’t biased toward one category.
+
+My evaluation metric is Mean Absolute Error (MAE) since I’m working with a regression model that predicts outage duration. MAE directly quantifies the average error between predicted and actual durations, making it an appropriate metric for this context.
+
+To assess fairness, I used a permutation test with 10000 trials. I first calculated the observed absolute difference in MAE between the two groups. I then randomly shuffled the group labels across the dataset 1000 times, recalculated the MAE difference for each shuffle, and created a distribution of these values under the null hypothesis.
+
+Null Hypothesis: The model is fair. Its MAE for severe weather and intentional attack outages is roughly the same, and any difference is due to random chance.
+
+Alternative Hypothesis: The model is unfair. Its MAE for severe weather is significantly different from that for intentional attacks.
+
+The p-value from the permutation test was 0.00, which is lower than the significance level. So, we reject the null hypothesis.
+
+The figure below shows the distribution of the statistic.
+
+<iframe
+  src="assets/fairness-analysis.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
