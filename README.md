@@ -46,15 +46,51 @@ With these transformations, the dataset was clean, consistent, and ready for ana
 ## Exploratory Data Analysis
 The exploratory data analysis (EDA) reveals several important patterns in the power outage dataset. 
 
+<iframe
+  src="assets/Distribution of Outage Duration.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 The distribution of outage durations is heavily right-skewed, with the majority of events lasting under 1,000 minutes, though a long tail of extreme cases exists. Most outages affect tens of thousands of customers, with some events impacting over one million. 
+
+<iframe
+  src="assets/Average Outage Duration per Cause Category.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 When looking at cause categories, outages attributed to fuel supply emergencies and severe weather have notably longer average durations, suggesting that certain causes are especially disruptive.
 
+<iframe
+  src="assets/Average Outage Duration by Cause Category Detail.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Further, detailed analysis by cause category reveals that events like coal-related outages, flooding, and transmission failures are associated with the highest average durations, exceeding 20,000 minutes in some cases. 
+
+<iframe
+  src="assets/Outage Duration vs U.S. State.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Geographic analysis by U.S. state shows a wide variation in outage lengths, with a number of states experiencing extreme values well above 50,000 minutes. Over time, average outage duration has fluctuated without a clear trend, indicating persistent structural vulnerabilities.
 
+<iframe
+  src="assets/Outage Duration Across Climate Regions.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 A boxplot by climate region also shows wide variation, especially in the Northeast and Southeast, suggesting that climate may influence outage severity.
+
 
 To explore this possibility, we compared outage durations between cold and warm climates. A distribution plot shows that while both climate types have similar right-skewed shapes, cold climates appear to have slightly longer durations, particularly in the tail.
 
