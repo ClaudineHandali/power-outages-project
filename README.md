@@ -94,6 +94,13 @@ A boxplot by climate region also shows wide variation, especially in the Northea
 
 To explore this possibility, we compared outage durations between cold and warm climates. A distribution plot shows that while both climate types have similar right-skewed shapes, cold climates appear to have slightly longer durations, particularly in the tail.
 
+<iframe
+  src="assets/Cold vs Warm Climates.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Supporting this, summary statistics show that the average and median durations in cold climates are higher than in warm climates.
 
 Motivated by these observations, we conducted a hypothesis test to determine whether the difference in mean outage duration between cold and warm climates is statistically significant.
@@ -114,6 +121,13 @@ The column `CUSTOMERS.AFFECTED` is most likely not missing at random (NMAR) beca
 
 **Alternative Hypothesis (H₁)**: Climate category distribution is different for missing and non-missing outage durations.
 
+<iframe
+  src="assets/Climate.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 **Observed TVD**: 0.0948
 
 **Permutation p-value**: 0.0656
@@ -125,6 +139,13 @@ The p-value is slightly above the common α = 0.05 threshold, suggesting weak ev
 
 **Alternative Hypothesis (H₁)**: Cause category distribution is different for missing and non-missing outage durations.
 
+<iframe
+  src="assets/Cause.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 **Observed TVD**: 0.4677
 
 **Permutation p-value**: 0.0000
@@ -135,6 +156,13 @@ The p-value is effectively zero, indicating strong evidence that the distributio
 **Null Hypothesis (H₀)**: Month distribution is the same for missing and non-missing outage durations.
 
 **Alternative Hypothesis (H₁)**: Month distribution is different for missing and non-missing outage durations.
+
+<iframe
+  src="assets/Month.html/"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 **Observed TVD**: 0.1432
 
