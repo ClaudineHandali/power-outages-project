@@ -140,29 +140,14 @@ There is no statistically significant evidence to suggest that mean outage durat
 ></iframe>
 
 
-# Framing a Prediction Problem
-# Baseline Model
-# Final Model
 
-# Fairness Analysis
-
-
-## Exploratory Data Analysis
-### Univariate Analysis
-### Bivariate Analysis
-### Grouping and Aggregates
-
-# Assessment of Missingness
-
-# Hypothesis Testing
 
 # Framing a Prediction Problem
 Our goal is to predict the power outage duration. This will be a regression problem because the power outage duration is measured by minutes, which is a continuous numerical variable. 
 
 I chose this problem because by predicting power outage duration we're able to know how long different outages might last. This allows the company to assign repair crews and equipments more effectively, prioritize high-impact areas, and reduce restoration time. A prediction models generate data that can be used to improve outage prevention, infrastructure investments, and disaster readiness.
 
-
-
+The metric I am using to evaluate my model is mean absolute error (MAE) because `OUTAGE.DURATION` contains several outliers. MAE is less sensitive to these extreme values, providing a more balanced view of average prediction error.
 # Baseline Model
 # Final Model
 
