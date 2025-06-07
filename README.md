@@ -125,6 +125,13 @@ The p-value of 0.6270 is much greater than the typical significance level of 0.0
 **Conclusion**:
 There is no statistically significant evidence to suggest that mean outage durations differ between cold and warm climate categories. The observed difference of 243.93 minutes is likely due to random chance.
 
+<iframe
+  src="assets/tvd.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 # Framing a Prediction Problem
 # Baseline Model
