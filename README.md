@@ -16,15 +16,56 @@ By: Claudine Handali, Sharon Tey
 ---
 
 
-#Introduction
+# Introduction
+
+This project analyzes a dataset of large-scale power outages in the United States between 2000 and 2016. Each row represents a significant outage — defined by the U.S. Department of Energy as one that either disrupted power for over 50,000 customers or caused an unplanned demand loss of at least 300 megawatts. The dataset was compiled by Purdue University's LASCI Lab and includes geographic, climatic, and demographic context alongside each outage.
+
+The main question driving this project is:  
+**What are the important factors that causes power outages? **  
+This question is relevant for improving infrastructure resilience and optimizing disaster response strategies amid climate variability.
+
+## Dataset Summary
+
+The dataset includes **1,534 rows**, each describing a separate outage event. The following columns are especially relevant:
+
+| Column Name               | Description |
+|---------------------------|-------------|
+| `'YEAR'`                  | Year the outage occurred |
+| `'MONTH'`                 | Month the outage occurred |
+| `'U.S._STATE'`            | State in which the outage occurred |
+| `'NERC.REGION'`           | NERC electric reliability region of the outage |
+| `'CLIMATE.REGION'`        | NOAA-defined U.S. climate region |
+| `'ANOMALY.LEVEL'`         | Seasonal climate anomaly (e.g., El Niño or La Niña) |
+| `'OUTAGE.START.DATE'`     | Date the outage began |
+| `'OUTAGE.START.TIME'`     | Time the outage began |
+| `'OUTAGE.RESTORATION.DATE'` | Date power was restored |
+| `'OUTAGE.RESTORATION.TIME'` | Time power was restored |
+| `'CAUSE.CATEGORY'`        | Broad reason for the outage (e.g., weather, equipment failure) |
+| `'OUTAGE.DURATION'`       | Length of the outage in minutes |
+| `'DEMAND.LOSS.MW'`        | Peak demand lost in megawatts |
+| `'CUSTOMERS.AFFECTED'`    | Number of customers without power |
+| `'TOTAL.PRICE'`           | Average monthly electricity price (cents/kWh) |
+| `'TOTAL.SALES'`           | Total electricity sales in MWh |
+| `'TOTAL.CUSTOMERS'`       | Annual number of customers served |
+| `'POPPCT_URBAN'`          | Percent of population living in urban areas |
+| `'POPDEN_URBAN'`          | Urban population density |
+| `'AREAPCT_URBAN'`         | Urban land area as a percentage of total state area |
+
+These columns enable us to investigate climate-specific trends in outage severity and duration.
 
 ---
 # Data Cleaning and Exploratory Data Analysis
-## 🔧 Data Cleaning
+## Data Cleaning
 
 For this project, we worked exclusively with the `outage.xlsx` dataset, which contains detailed records of major power outages across the United States.
 
-We began by selecting a subset of columns relevant to my analysis, including:
+We began by selectThis project explores a dataset of major power outages in the United States from January 2000 to July 2016, compiled by the U.S. Department of Energy and shared by Purdue University’s LASCI Lab. Each entry in the dataset represents a significant outage event—defined as affecting at least 50,000 customers or causing a loss of 300 megawatts or more in unplanned energy demand.
+
+Our central question is:
+
+Are power outages that occur during cold climate conditions significantly longer than those that occur during warm conditions?
+
+This question matters because understanding the relationship between climate conditions and outage severity can help utilities, local governments, and emergency response teams better anticipate the scale of disruption and respond proactively during different seasons.ing a subset of columns relevant to my analysis, including:
 
 - **Temporal and geographic data:** `YEAR`, `MONTH`, `U.S._STATE`, `NERC.REGION`, `CLIMATE.REGION`
 - **Outage metadata:** `CAUSE.CATEGORY`, `CAUSE.CATEGORY.DETAIL`, `OUTAGE.DURATION`, `DEMAND.LOSS.MW`, `CUSTOMERS.AFFECTED`
@@ -46,19 +87,69 @@ With these transformations, the dataset was clean, consistent, and ready for ana
 ## Exploratory Data Analysis
 The exploratory data analysis (EDA) reveals several important patterns in the power outage dataset. 
 
+<iframe
+  src="assets/Distribution of Outage Duration.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 The distribution of outage durations is heavily right-skewed, with the majority of events lasting under 1,000 minutes, though a long tail of extreme cases exists. Most outages affect tens of thousands of customers, with some events impacting over one million. 
+
+<iframe
+  src="assets/Average Outage Duration per Cause Category.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 When looking at cause categories, outages attributed to fuel supply emergencies and severe weather have notably longer average durations, suggesting that certain causes are especially disruptive.
 
+<iframe
+  src="assets/Average Outage Duration by Cause Category Detail.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Further, detailed analysis by cause category reveals that events like coal-related outages, flooding, and transmission failures are associated with the highest average durations, exceeding 20,000 minutes in some cases. 
+
+<iframe
+  src="assets/Outage Duration vs U.S. State.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 Geographic analysis by U.S. state shows a wide variation in outage lengths, with a number of states experiencing extreme values well above 50,000 minutes. Over time, average outage duration has fluctuated without a clear trend, indicating persistent structural vulnerabilities.
 
+<iframe
+  src="assets/Outage Duration Across Climate Regions.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 A boxplot by climate region also shows wide variation, especially in the Northeast and Southeast, suggesting that climate may influence outage severity.
+
 
 To explore this possibility, we compared outage durations between cold and warm climates. A distribution plot shows that while both climate types have similar right-skewed shapes, cold climates appear to have slightly longer durations, particularly in the tail.
 
+<iframe
+  src="assets/Cold vs Warm Climates.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 Supporting this, summary statistics show that the average and median durations in cold climates are higher than in warm climates.
+
+| Climate Category | Number of Outages | Average Duration | Median Duration |
+|------------------|-------------------|------------------|-----------------|
+| cold             | 420               | 2915.30          | 1036.00         |
+| normal           | 690               | 2635.97          | 726.50          |
+| warm             | 280               | 2671.36          | 890.50          |
+
 
 Motivated by these observations, we conducted a hypothesis test to determine whether the difference in mean outage duration between cold and warm climates is statistically significant.
 
@@ -68,7 +159,7 @@ We investigated whether missing outage durations are associated with differences
 
 ## NMAR Analysis
 
-The column `CUSTOMERS.AFFECTED` is most likely missing not at random (MNAR) because the likelihood of missingness appears to be directly related to the unobserved value itself. In particular, outages that impact very few customers—such as small-scale or rural incidents—may be less likely to be reported or prioritized in data collection processes, increasing the chance of missing data. Conversely, during large-scale emergencies that affect a high number of customers, data may be incomplete or delayed due to logistical challenges and infrastructure disruption. In both scenarios, the probability that "Customers Affected" is missing is dependent on the actual number of customers impacted, which is not observed. This dependence on the unobserved value is a defining characteristic of MNAR, distinguishing it from missing completely at random (MCAR) or missing at random (MAR) mechanisms.
+The column `CUSTOMERS.AFFECTED` is most likely not missing at random (NMAR) because the likelihood of missingness appears to be directly related to the unobserved value itself. In particular, outages that impact very few customers—such as small-scale or rural incidents—may be less likely to be reported or prioritized in data collection processes, increasing the chance of missing data. Conversely, during large-scale emergencies that affect a high number of customers, data may be incomplete or delayed due to logistical challenges and infrastructure disruption. In both scenarios, the probability that "Customers Affected" is missing is dependent on the actual number of customers impacted, which is not observed. This dependence on the unobserved value is a defining characteristic of NMAR, distinguishing it from missing completely at random (MCAR) or missing at random (MAR) mechanisms.
 
 
 
@@ -77,6 +168,13 @@ The column `CUSTOMERS.AFFECTED` is most likely missing not at random (MNAR) beca
 **Null Hypothesis (H₀)**: Climate category distribution is the same for missing and non-missing outage durations.
 
 **Alternative Hypothesis (H₁)**: Climate category distribution is different for missing and non-missing outage durations.
+
+<iframe
+  src="assets/Climate.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 **Observed TVD**: 0.0948
 
@@ -89,6 +187,13 @@ The p-value is slightly above the common α = 0.05 threshold, suggesting weak ev
 
 **Alternative Hypothesis (H₁)**: Cause category distribution is different for missing and non-missing outage durations.
 
+<iframe
+  src="assets/Cause.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 **Observed TVD**: 0.4677
 
 **Permutation p-value**: 0.0000
@@ -99,6 +204,13 @@ The p-value is effectively zero, indicating strong evidence that the distributio
 **Null Hypothesis (H₀)**: Month distribution is the same for missing and non-missing outage durations.
 
 **Alternative Hypothesis (H₁)**: Month distribution is different for missing and non-missing outage durations.
+
+<iframe
+  src="assets/Month.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 **Observed TVD**: 0.1432
 
@@ -133,7 +245,7 @@ The p-value of 0.6270 is much greater than the typical significance level of 0.0
 There is no statistically significant evidence to suggest that mean outage durations differ between cold and warm climate categories. The observed difference of 243.93 minutes is likely due to random chance.
 
 <iframe
-  src="assets/tvd.html"
+  src="assets/empirical.html"
   width="800"
   height="600"
   frameborder="0"
