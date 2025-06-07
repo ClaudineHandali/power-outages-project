@@ -276,11 +276,11 @@ This round, the model performed better with a MAE of 1742.14 minutes, lowering i
 # Fairness Analysis
 Our groups decided to use severe weather vs intentional attack outages as our fairness analysis. This is defined using the CAUSE.CATEGORY column, where one group includes all test samples labeled “severe weather” and the other includes “intentional attack.”
 
-I decided on these groups because understanding how well the model predicts outages caused by natural events (like storms) versus mankind ones (like sabotage) is critical. These categories represent two fundamentally different causes of outages, and utilities may allocate very different types of resources to mitigate them. We want to ensure the model performs equitably across both causes so that decisions aren’t biased toward one category.
+We decided on these groups because understanding how well the model predicts outages caused by natural events (like storms) versus mankind ones (like sabotage) is critical. These categories represent two fundamentally different causes of outages, and utilities may allocate very different types of resources to mitigate them. We want to ensure the model performs equitably across both causes so that decisions aren’t biased toward one category.
 
-My evaluation metric is Mean Absolute Error (MAE) since I’m working with a regression model that predicts outage duration. MAE directly quantifies the average error between predicted and actual durations, making it an appropriate metric for this context.
+Our evaluation metric is Mean Absolute Error (MAE) since we are working with a regression model that predicts outage duration. MAE directly quantifies the average error between predicted and actual durations without emphasizing outliers, making it an appropriate metric for this context.
 
-To assess fairness, I used a permutation test with 10000 trials. I first calculated the observed absolute difference in MAE between the two groups. I then randomly shuffled the group labels across the dataset 1000 times, recalculated the MAE difference for each shuffle, and created a distribution of these values under the null hypothesis.
+To assess fairness, we used a permutation test with 10000 trials. We calculated the observed absolute difference in MAE between the two groups. Then, we randomly shuffled the group labels across the dataset 1000 times, recalculated the MAE difference for each shuffle, and created a distribution of these values under the null hypothesis.
 
 Null Hypothesis: The model is fair. Its MAE for severe weather and intentional attack outages is roughly the same, and any difference is due to random chance.
 
