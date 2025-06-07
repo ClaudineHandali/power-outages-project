@@ -3,16 +3,6 @@ DSC 80 Final Project
 
 By: Claudine Handali, Sharon Tey
 
-#Introduction
-
-
-# Data Cleaning and Exploratory Data Analysis
-## Cleaning
-# Power Outages Analysis
-DSC 80 Final Project
-
-By: Claudine Handali, Sharon Tey
-
 ---
 
 
