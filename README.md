@@ -1,5 +1,4 @@
-# Power Outages Analysis
-DSC 80 Final Project
+# Predicting Power Outages: What Causes Them and Who's Most Affected?
 
 By: Claudine Handali, Sharon Tey
 
